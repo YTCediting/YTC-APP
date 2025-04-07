@@ -3,81 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YTC</title>
-    <link rel="stylesheet" href="style.css">
+    <title>YTC Pro Editor</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-screen">
-        <div class="login-box">
-            <h2>YTC Login 🔒</h2>
-            <input type="email" placeholder="Gmail" id="email">
-            <input type="password" placeholder="Password" id="password">
-            <button onclick="checkLogin()">Login</button>
-        </div>
+   
     </div>
 
     <!-- Main App -->
     <div class="navbar">
-        <img src="assets/logo.png" alt="YTC Logo" class="logo">
-        <h1>YTC</h1>
-        <button class="export-btn" onclick="alert('Exporting... MP4/WebM!')">Export 🚀</button>
+        <img src="./assets/logo.png" class="logo" alt="YTC Logo">
+        <h1>YTC Pro</h1>
+        <div class="nav-buttons">
+            <button onclick="undo()">↩️ Undo</button>
+            <button onclick="redo()">↪️ Redo</button>
+            <button class="export-btn" onclick="exportVideo()">Export 🚀</button>
+        </div>
     </div>
 
     <div class="main-content">
+        <!-- Left Panel - Tools -->
         <div class="left-panel">
             <p>🛠 Tools</p>
             <ul>
-                <li onclick="alert('Trim Tool Active! ✂️')">Trim</li>
-                <li onclick="alert('Adding Effects! 🌈')">Effects</li>
-                <li onclick="alert('Keyframes Panel Open! ⏱️')">Keyframes</li>
-                <li onclick="alert('Syncing Audio... 🔊')">Audio Sync</li>
-                <li onclick="alert('3D Tracking Activated! 🎮')">3D Tracking</li>
+                <li onclick="activateTrimMode()">Trim ✂️</li>
+                <li onclick="addEffect('blur')">Blur 🌫️</li>
+                <li onclick="addEffect('contrast')">Contrast 🌓</li>
+                <li onclick="splitClip()">Split Clip ✂️</li>
+                <li onclick="showFrames()">Frame View 🎞️</li>
             </ul>
         </div>
+
+        <!-- Video Preview Area -->
         <div class="preview-area">
-            <!-- Import Button Added -->
+            <video id="video-preview" controls style="display:none;"></video>
             <label class="import-btn">
                 📁 Import Video
-                <input type="file" id="video-upload" hidden accept="video/*">
+                <input type="file" id="video-upload" accept="video/*" hidden>
             </label>
             <p id="file-name"></p>
         </div>
-        <div class="timeline">
-            <p>🎞 Timeline Area (Drag-Drop Coming Soon!)</p>
+
+        <!-- Enhanced Timeline -->
+        <div class="timeline-container">
+            <div class="timeline-controls">
+                <button onclick="zoomIn()">🔍 Zoom In</button>
+                <button onclick="zoomOut()">🔍 Zoom Out</button>
+                <span id="time-display">00:00 / 00:00</span>
+            </div>
+            
+            <!-- Frame-by-Frame View -->
+            <div class="frame-view" id="frame-view">
+                <div class="frames-container" id="frames-container"></div>
+            </div>
+            
+            <!-- Main Timeline -->
+            <div class="timeline-tracks" id="timeline">
+                <div class="video-track" id="video-track">
+                    <div class="clip" id="main-clip"></div>
+                </div>
+                <div class="trim-cursor" id="trim-cursor"></div>
+                <div class="split-marker" id="split-marker"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script>
-        // Login Check
-        function checkLogin() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            if (email && password) {
-                document.querySelector('.login-screen').style.display = 'none';
-            }
-        }
-
-        // Admin Panel (5 Clicks)
-        let clickCount = 0;
-        document.querySelector('.logo').addEventListener('click', () => {
-            clickCount++;
-            if (clickCount === 5) {
-                const email = prompt("Admin Email dalo:");
-                const password = prompt("Admin Password dalo:");
-                if (email === "yash9999.pin@gmail.com" && password === "YTC9450326308EDITING") {
-                    alert("Admin Access Mil Gaya! 🎉");
-                }
-            }
-        });
-
-        // File Upload Handler
-        document.getElementById('video-upload').addEventListener('change', function(e) {
-            const fileName = e.target.files[0].name;
-            document.getElementById('file-name').textContent = `Selected: ${fileName}`;
-            alert("Video Imported! 🎬 Edit Karo!");
-        });
-    </script>
+    <script src="./script.js"></script>
 </body>
 </html>
